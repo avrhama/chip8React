@@ -16,9 +16,7 @@ class OpenFileDialog extends Component {
             //In this example, I'm putting the selected file's name in the title. You don't need to do this
             document.title = fileInput.files[0].name;
         }
-         else {
-           document.title = "FileReader Example";
-        }
+       
 
        var fr = new FileReader();
         fr.readAsArrayBuffer(fileInput.files[0]);
