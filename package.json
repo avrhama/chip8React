@@ -1,4 +1,6 @@
+
 {
+  "homepage": "https://avrhama.github.io/chip8React",
   "name": "chip-8",
   "version": "0.1.0",
   "private": true,
