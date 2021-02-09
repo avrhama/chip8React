@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+//import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import OpenFileDialog from './components/openFileDialog'
+import Bus from './components/bus'
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Bus/>
   </React.StrictMode>,
   document.getElementById('root')
 );
