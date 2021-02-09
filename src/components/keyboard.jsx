@@ -24,15 +24,7 @@ class Keyboard extends Component {
     return (
       <div id="container" style={{float: "right"}}>
         <ul id="keyboard">
-        {counters.map((counter) => (
-          <Counter
-            onDelete={onDelete}
-            key={counter.id}
-            counter={counter}
-            value={counter.value}
-            onIncrement={onIncrement}
-          ></Counter>
-        ))}
+       
 
 
           <Key onKeyClicked={this.handleClick} keyLetter="1"/>
@@ -74,3 +66,15 @@ class Key extends Component {
         </li>;
   }
 }
+
+/*
+ {counters.map((counter) => (
+          <Counter
+            onDelete={onDelete}
+            key={counter.id}
+            counter={counter}
+            value={counter.value}
+            onIncrement={onIncrement}
+          ></Counter>
+        ))}
+*/
