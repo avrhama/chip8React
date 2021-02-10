@@ -46,18 +46,15 @@ class Cpu{
         if(!this.waitingForKey){
         let opcodePrefix = this.bus.ram.read(this.PC);
         let opcodeSuffix = this.bus.ram.read(this.PC + 1);
-        //console.log("prefix suffix ",opcodePrefix,opcodePrefix)
+    
         this.PC += 2;
         this.opcode = (opcodePrefix << 8) | opcodeSuffix;
     }
         let operationKey = this.opcodes.getOperationKey(this.opcode);
         if (this.opcodes.opcodesTable.has(operationKey)) {
-            //console.log("opcode ",operationKey)
             let op = this.opcodes.opcodesTable.get(operationKey);
             op.operation();
         } else {
-           // System.out.printf("such opcode is not supported! opcode:%X prefix:%X suffix:%X\n", opcode, opcodePrefix,
-                    //opcodeSuffix);
            console.log("Error at cpu execute function")
         }
 

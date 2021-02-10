@@ -128,7 +128,6 @@ getOperationKey(opcode) {
 
   op0nnn = () => {
     console.log("if op0nnn called, its Error");
-    //this.bus.ram.test();
   };
 
 /*

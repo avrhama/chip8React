@@ -48,7 +48,6 @@ class Keyboard extends Component {
   };
   handleFocusOut=()=>{
     if (this.currClicked != undefined&&this.currClicked.state.iskeyclicked) {
-      console.log(this.currClicked.key);
       this.currClicked.key.current.click();
       this.currClicked=undefined;
     }
@@ -94,7 +93,6 @@ class Key extends Component {
   constructor() {
     super();
     this.key = React.createRef();
-    //this.isKeyClicked=false;
   }
 
   render() {
@@ -111,69 +109,3 @@ class Key extends Component {
     );
   }
 }
-/*
-<Key onKeyClicked={this.handleClick} keyName="1" keyLetter="1" />
-          <Key onKeyClicked={this.handleClick} keyName="2" keyLetter="2" />
-          <Key onKeyClicked={this.handleClick} keyName="3" keyLetter="3" />
-          <Key onKeyClicked={this.handleClick} keyName="C" keyLetter="C" />
-          <br />
-          <br />
-          <br />
-          <Key onKeyClicked={this.handleClick} keyName="4" keyLetter="4" />
-          <Key onKeyClicked={this.handleClick} keyName="5" keyLetter="5" />
-          <Key onKeyClicked={this.handleClick} keyName="6" keyLetter="6" />
-          <Key onKeyClicked={this.handleClick} keyName="D" keyLetter="D" />
-          <br />
-          <br />
-          <br />
-          <Key onKeyClicked={this.handleClick} keyName="7" keyLetter="7" />
-          <Key onKeyClicked={this.handleClick} keyName="8" keyLetter="8" />
-          <Key onKeyClicked={this.handleClick} keyName="9" keyLetter="9" />
-          <Key onKeyClicked={this.handleClick} keyName="E" keyLetter="E" />
-          <br />
-          <br />
-          <br />
-          <Key onKeyClicked={this.handleClick} keyName="A" keyLetter="A" />
-          <Key onKeyClicked={this.handleClick} keyName="0" keyLetter="0" />
-          <Key onKeyClicked={this.handleClick} keyName="B" keyLetter="B" />
-          <Key onKeyClicked={this.handleClick} keyName="F" keyLetter="F" />
-*/
-
-/*
-{String.fromCharCode(e.keyCode)}
-        {counters.map((keyCode,keyIndex) => (
-          <Key onKeyClicked={this.handleClick} keyLetter="1"/>
-        ))}
- {counters.map((counter) => (
-          <Counter
-            onDelete={onDelete}
-            key={counter.id}
-            counter={counter}
-            value={counter.value}
-            onIncrement={onIncrement}
-          ></Counter>
-        ))}
-*/
-
-/*
-{this.state.keysCodes.map((keyCode,keyIndex) =>{
-            
-          if((keyIndex%4)===0){
-            //return <h1>hejsan</h1>
-           return (<Key onKeyClicked={this.handleClick} keyName={(keyIndex).toString(16).toUpperCase()} keyLetter={String.fromCharCode(keyCode)}><br /><h1>hejsan</h1><br /></Key>)
-           
-
-            
-            } 
-            return <Key onKeyClicked={this.handleClick} keyName={(keyIndex).toString(16).toUpperCase()} keyLetter={String.fromCharCode(keyCode)}/>
-     })}
-*/
-/*
- {this.state.keysCodes.map((keyCode, keyIndex) => (
-            <Key
-              onKeyClicked={this.handleClick}
-              keyName={keyIndex.toString(16).toUpperCase()}
-              keyLetter={String.fromCharCode(keyCode)}
-            />
-          ))}
-*/

@@ -33,8 +33,6 @@ class Joypad extends Component {
         return this.keyboard.getKeyCode(keyIndex);
     }
     handleKeyCodeChanged=(event)=>{
-        console.log("key changed!",event);
-
         const oldKeyCode=event.detail.oldKeyCode;
         const newKeyCode=event.detail.newKeyCode;
         this.keys.delete(oldKeyCode);
@@ -58,7 +56,6 @@ handleKeyDown = (event) => {
     let keyCode=event.keyCode;
     if(!this.keys.has(keyCode)||this.keys.get(keyCode).pressed)
     return;
-    console.log("key down");
     this.keys.get(keyCode).pressed=true;
     this.pressedKey=this.keys.get(keyCode)
     

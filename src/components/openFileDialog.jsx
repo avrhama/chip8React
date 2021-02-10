@@ -13,30 +13,34 @@ class OpenFileDialog extends Component {
 
       var fr = new FileReader();
       fr.readAsArrayBuffer(fileInput.files[0]);
-      fileInput.value="";
+     fileInput.value="";
       fr.onload = (event) => {
         this.props.onFileLoaded(fr.result);
       };
-    }else{
-        this.props.bus.setPaused(false)
     }
   };
   render() {
     return (
+    
       <div>
+        
+       
         <input
           id="fileInput"
+          ref={(fileInput)=>{this.fileInput=fileInput}}
+          hidden
           onClick={() => {
             this.props.bus.setPaused(true);
-            console.log("paused!")
           }}
           onChange={this.handleInputFileChange}
           type="file"
           accept=".ch8"
         />
+        <button type="button"
+            className="btn btn-primary btn-sm" onClick={()=>{this.fileInput.click();}}>Open .CH8 File</button>
       </div>
+     
     );
   }
 }
-
 export default OpenFileDialog;

@@ -18,13 +18,10 @@ class DisplayConfig extends Component {
   }
   getDisplayConfig=()=>{
     const monochromes=this.getMonochromes();
-    console.log(monochromes);
     const configs={currPixelShape:this.state.currPixelShape, pixelSize:this.state.pixelSize,pixelPadding:this.state.pixelPadding,monochromes:monochromes};
 return configs;
   }
-  displayConfigsChanged = () => {
-      console.log("fire pixel changed")
-      
+  displayConfigsChanged = () => {      
     var keyCodeChangedEvent = new CustomEvent("configsChangedEvent");
     let displayConfig = document.getElementById("displayConfig");
     displayConfig.dispatchEvent(keyCodeChangedEvent);
@@ -62,14 +59,12 @@ return configs;
         colorPicker.value=color;
         const monochromes=[...this.state.monochromes];
         monochromes[monochromeColorIndex]=color;
-        console.log(color,monochromeColorIndex)
         this.setState({monochromes},this.displayConfigsChanged);
       }
   }
   render() {
     return (
       <div id="displayConfig">
-        <h3>Display Configurations</h3>
         <label>select pixel shape:</label>
         <select
           id="pixelShapeSelect"
