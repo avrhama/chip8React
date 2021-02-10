@@ -9,13 +9,21 @@ class Bus extends Component {
   state = {};
   constructor() {
     super();
+    this.configurations = React.createRef();
     this.paused = false;
     this.ram = new Ram(this);
-    //this.opcodes=new Opcodes(this);
-    //this.opcodes.opcodes.get('0.0').operation()
     this.cpu = new Cpu(this);
     this.joypad = React.createRef();
     this.display = React.createRef();
+   
+    
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+    const fileUrl=baseUrl+'/beep.wav';
+    this.apu = new Audio(fileUrl);
+  }
+  setPaused=(paused)=>{
+    this.paused=paused;
   }
   execute = () => {
     if (this.paused) return;
@@ -30,10 +38,14 @@ class Bus extends Component {
     this.cpu.st.tick();
     this.display.current.drawPixels();
     if (this.cpu.st.value > 0) {
-      console.log("Make Noise!");
+      this.apu.play();
     }
   };
   turnOn = () => {
+    this.paused=false;
+    this.cpu.restart();
+    this.display.current.clear();
+    clearInterval(this.executeTimer);
     this.executeTimer = setInterval(this.execute, 16);
   };
   turnOff = () => {
@@ -46,13 +58,14 @@ class Bus extends Component {
   ramLoaded = () => {
     this.turnOn();
   };
+  
   render() {
     return (
       <React.Fragment>
         <div>
-          <OpenFileDialog onFileLoaded={this.ram.loadRam} />
-          <Display ref={this.display} style={{float: "left"}}/>
-          <Configurations />
+          <Configurations ref={this.configurations} />
+          <OpenFileDialog onFileLoaded={this.ram.loadRam} bus={this}/>
+          <Display ref={this.display} configurations={this.configurations} style={{float: "left"}}/>
           <Joypad ref={this.joypad} bus={this} />
         </div>
       </React.Fragment>

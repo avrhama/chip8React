@@ -1,75 +1,101 @@
 import React, { Component } from "react";
 class Display extends Component {
-  state = { pixelSize: 10, padding: 1 };
+  state = { pixelSize: 10, pixelPadding: 1 };
   constructor() {
     super();
     this.pixels = [];
     this.width = 64;
     this.height = 32;
-    this.monochromes = Object.freeze({ Black: "#000000", White: "#FFFFFF" });
     this.canvas = React.createRef();
-
-    this.config();
-    //this.setPixel=this.setPixel;
   }
+  loadConfigs(callback){
+    const displayConfig=this.props.configurations.current.displayConfig
+   const configs=displayConfig.getDisplayConfig();
+   this.currPixelShape=configs.currPixelShape;
+   this.monochromes=configs.monochromes;
+   this.setState({pixelSize:configs.pixelSize,pixelPadding:configs.pixelPadding},callback);
+  }
+  redrawDisplay=()=>{
+    const context = this.canvas.current.getContext('2d');
+    context.clearRect(0, 0, this.canvas.current.width, this.canvas.current.height);
+    this.drawPixels(true);
+  }
+  handleDisplayConfigChanged=()=>{
+    this.loadConfigs(this.redrawDisplay);
+  }
+
+
   config = () => {
+    /*const displayConfig=this.props.configurations.current.displayConfig
+   const monochromes= displayConfig.getMonochromes();
+   this.monochromes={Black: monochromes[0], White:monochromes[1]}
+   this.currPixelShape=displayConfig.getCurrPixelShape();*/
+   this.loadConfigs();
+   
     let size = this.width * this.height;
     this.pixels = [];
     for (let i = 0; i < size; i++) {
-      this.pixels.push({ color: "#000000", colorChanged: true });
+      this.pixels.push({ colorIndex: 0, colorChanged: true });
     }
-    // this.state.pixels=pixels;
-    //this.setState({pixels},this.drawPixels);
-    //console.log(pixels.length);
+
   };
   clear = () => {
     let size = this.width * this.height;
     for (let i = 0; i < size; i++) {
-      this.pixels[i] = { color: "#000000", colorChanged: true };
+      this.pixels[i] = { colorIndex: 0, colorChanged: true };
     }
     this.drawPixels();
   };
   componentDidMount() {
-    //this.updateCanvas();
+    let displayConfig=document.getElementById("displayConfig");
+    displayConfig.addEventListener("configsChangedEvent", this.handleDisplayConfigChanged, false);
+    this.config();
     this.drawPixels();
-    //this.setPixel(0,0,"#c82124");
-    // this.setPixel(1,0,"#c82124")
-    // this.setPixel(2,0,"#c82124")
-    // this.setPixel(0,1,"#c82124")
+
+  }
+  componentWillUnmount() {
+    let displayConfig=document.getElementById("displayConfig");
+    displayConfig.removeEventListener("configsChangedEvent", this.handleDisplayConfigChanged);
+
   }
 
-  drawPixels = () => {
-    // console.log(this.state.pixels.length);
-    //return;
+  drawPixels = (force=false) => {
     for (let i = 0; i < this.pixels.length; i++) {
       let x = i % this.width;
       let y = Math.floor(i / this.width);
-      if (this.pixels[i].colorChanged) {
-        this.drawPixel(x, y, this.pixels[i].color);
+      if (this.pixels[i].colorChanged||force) {
+        this.drawPixel(x, y,this.pixels[i].colorIndex);
         this.pixels[i].colorChanged = false;
       }
     }
   };
-  drawPixel = (x, y, color) => {
+  drawPixel = (x, y, colorIndex) => {
+    
     const ctx = this.canvas.current.getContext("2d");
-    const { padding, pixelSize } = this.state;
+    const { pixelPadding, pixelSize } = this.state;
     let radius = Math.floor(pixelSize / 2);
-    ctx.fillStyle = color;
+    
+    ctx.fillStyle = this.monochromes[colorIndex];
     ctx.beginPath();
+    if(this.currPixelShape==="circle"){
     ctx.arc(
-      (pixelSize + padding) * x + radius,
-      (pixelSize + padding) * y + radius,
+      (pixelSize + pixelPadding) * x + radius,
+      (pixelSize + pixelPadding) * y + radius,
       radius,
       0,
       2 * Math.PI
     );
-    ctx.fill();
+   
+  }else if(this.currPixelShape==="rectangle"){
+    ctx.rect((pixelSize + pixelPadding) * x, (pixelSize + pixelPadding) * y, pixelSize, pixelSize);
+  }
+  ctx.fill();
     ctx.closePath();
     // ctx.stroke();
   };
-  setPixel = (x, y, color) => {
+  setPixel = (x, y, colorIndex) => {
     let index = this.width * y + x;
-    this.pixels[index].color = color;
+    this.pixels[index].colorIndex = colorIndex;
     this.pixels[index].colorChanged = true;
   };
   getPixel = (x, y) => {
@@ -77,13 +103,13 @@ class Display extends Component {
     return this.pixels[index];
   };
   render() {
-    const { padding, pixelSize } = this.state;
+    const { pixelPadding, pixelSize } = this.state;
     return (
       <div style={{ float: "left" }}>
         <canvas
           ref={this.canvas}
-          width={(pixelSize + padding) * (this.width + 1)}
-          height={(pixelSize + padding) * (this.height + 1)}
+          width={(pixelSize + pixelPadding) * (this.width + 1)}
+          height={(pixelSize + pixelPadding) * (this.height + 1)}
         />
       </div>
     );

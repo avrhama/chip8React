@@ -113,7 +113,6 @@ class Ram {
     return this.mem[address];
 }
   loadRam=(buffer)=> {
-    
     let data =new Uint8Array(buffer);
     for(var i=0;i<data.length;i++){
        

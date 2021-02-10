@@ -7,14 +7,16 @@ class Key {
   
 }
 class Joypad extends Component {
-    state = { keysCodes:[48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70] }
+   // state = { keysCodes:[48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70] }
 
     constructor(props){
        
         super(props);
         this.pressedKey=undefined;
+       // this.keyborad=props.bus.configurations.current.keyboard.current;
+        
         this.keys=new Map();
-        this.config();
+        //this.config();
         //this.bus=props.bus;
        // this.setPixel=props.bus.display.setPixel;
     }
@@ -28,13 +30,26 @@ class Joypad extends Component {
         this.setState({ keysCodes });
     }
     getKeyCode=(keyIndex)=>{
-        
-        if(keyIndex<this.state.keysCodes.length)
-        return this.state.keysCodes[keyIndex];
-        return this.state.keysCodes[0];
+        return this.keyboard.getKeyCode(keyIndex);
+    }
+    handleKeyCodeChanged=(event)=>{
+        console.log("key changed!",event);
+
+        const oldKeyCode=event.detail.oldKeyCode;
+        const newKeyCode=event.detail.newKeyCode;
+        this.keys.delete(oldKeyCode);
+        this.keys.set(newKeyCode,new Key(newKeyCode));
     }
     config=()=>{
-        for(let keyCode of this.state.keysCodes){
+        let keyboard=document.getElementById("keyboard");
+        keyboard.addEventListener("keyCodeChangedEvent", this.handleKeyCodeChanged, false);
+        //this.keyboard=this.props.bus.configurations.configurations.current.keyboard.current;
+        /*for(let keyCode of this.state.keysCodes){
+            this.keys.set(keyCode,new Key(keyCode));
+        }*/
+        this.keyboard=this.props.bus.configurations.current.keyboard.current;
+        const keysCodes=this.keyboard.getKeysCodes();//[...this.keyboard.state.keysCodes];
+        for(let keyCode of keysCodes){
             this.keys.set(keyCode,new Key(keyCode));
         }
     }
@@ -43,12 +58,12 @@ handleKeyDown = (event) => {
     let keyCode=event.keyCode;
     if(!this.keys.has(keyCode)||this.keys.get(keyCode).pressed)
     return;
+    console.log("key down");
     this.keys.get(keyCode).pressed=true;
     this.pressedKey=this.keys.get(keyCode)
     
 }
 handleKeyUp = (event) => {
-    console.log("key up!")
     let keyCode=event.keyCode;
     if(!this.keys.has(keyCode))
     return;
@@ -56,21 +71,24 @@ handleKeyUp = (event) => {
 }
 // componentWillMount deprecated in React 16.3
 componentDidMount(){
+    this.config();
     //BannerDataStore.addChangeListener(this._onchange);
-    document.addEventListener("click", this._handleDocumentClick, false);
     document.addEventListener("keydown", this.handleKeyDown);
     document.addEventListener("keyup", this.handleKeyUp);
+    
 }
 
 
 componentWillUnmount() {
     //BannerDataStore.removeChangeListener(this._onchange);
-    document.removeEventListener("click", this._handleDocumentClick, false);
     document.removeEventListener("keydown", this.handleKeyDown);
     document.removeEventListener("keyup", this.handleKeyUp);
+    let keyboard=document.getElementById("keyboard");
+    keyboard.removeEventListener("keyCodeChangedEvent", this.handleKeyCodeChanged);
+
 }
     render() { 
-        return ( <div>
+        return ( <div id="joypad" tabIndex="0">
 
         </div> );
     }

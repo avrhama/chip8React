@@ -418,11 +418,11 @@ opDxyn=()=>{
 				var currPosX = posX + (7 - stepPixel)
 				currPosX = currPosX % display.width
 
-				let currColor = display.getPixel(currPosX, posY).color;
+				let currColorIndex = display.getPixel(currPosX, posY).colorIndex;
 				//indecates if the curr present pixel is black pixel or not
                let oldPixelBit = 0
                 //although this is monochrome display, the colors dont have to be  white and black
-				if (currColor!=display.monochromes.Black) {
+				if (currColorIndex!=0) {
 					oldPixelBit = 1
 				}
 
@@ -431,14 +431,14 @@ opDxyn=()=>{
 					this.cpu.registers[0xf] = 1
                 }
                 //TODO
-				let color =  display.monochromes.Black;
+				let colorIndex =  0;
 
 				if ((oldPixelBit ^ newPixelBit) === 1) {
-					color = display.monochromes.White;
+					colorIndex = 1;
                     
 
 				}
-				display.setPixel(currPosX, posY, color)
+				display.setPixel(currPosX, posY, colorIndex)
 			}
 
 		}
