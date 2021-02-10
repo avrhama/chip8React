@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/chip8React/static/css/main.1384567b.chunk.css",
+    "main.js": "/chip8React/static/js/main.1f0540c7.chunk.js",
+    "main.js.map": "/chip8React/static/js/main.1f0540c7.chunk.js.map",
+    "runtime-main.js": "/chip8React/static/js/runtime-main.7844eccc.js",
+    "runtime-main.js.map": "/chip8React/static/js/runtime-main.7844eccc.js.map",
+    "static/js/2.a91e5c93.chunk.js": "/chip8React/static/js/2.a91e5c93.chunk.js",
+    "static/js/2.a91e5c93.chunk.js.map": "/chip8React/static/js/2.a91e5c93.chunk.js.map",
+    "static/js/3.3a738772.chunk.js": "/chip8React/static/js/3.3a738772.chunk.js",
+    "static/js/3.3a738772.chunk.js.map": "/chip8React/static/js/3.3a738772.chunk.js.map",
+    "index.html": "/chip8React/index.html",
+    "static/css/main.1384567b.chunk.css.map": "/chip8React/static/css/main.1384567b.chunk.css.map",
+    "static/js/2.a91e5c93.chunk.js.LICENSE.txt": "/chip8React/static/js/2.a91e5c93.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7844eccc.js",
+    "static/js/2.a91e5c93.chunk.js",
+    "static/css/main.1384567b.chunk.css",
+    "static/js/main.1f0540c7.chunk.js"
+  ]
+}
