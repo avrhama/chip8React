@@ -30,8 +30,8 @@ class Bus extends Component {
   };
   execute = () => {
     if (this.state.paused) return;
-    let oPTT = 10;
     let oPTTCounter = 0;
+    let oPTT = 10;
     while (oPTTCounter < oPTT) {
       this.cpu.execute();
       oPTTCounter++;
